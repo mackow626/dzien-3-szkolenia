@@ -17,6 +17,16 @@ public class Movie {
         this.movieType = movieType;
     }
 
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "title='" + title + '\'' +
+                ", director=" + director +
+                ", premierDate=" + premierDate +
+                ", actors=" + actors +
+                ", movieType=" + movieType +
+                '}';
+    }
 
     public String getTitle() {
         return title;
