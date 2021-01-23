@@ -8,36 +8,74 @@ import java.util.Scanner;
 
 public class Main {
     static List<Movie> movieList = new ArrayList<>();
+    static List<Actor> actorList = new ArrayList<>();
+    static List<Director> directorList = new ArrayList<>();
 
     public static void main(String[] args) {
-        displayMenu();
         dataPreparation();
         selectMenu();
-
     }
 
     private static void selectMenu() {
-        Scanner scanner = new Scanner(System.in);
-        String selectMenu = scanner.nextLine();
+        boolean counter = true;
+        while (counter) {
+            displayMenu();
+            Scanner scanner = new Scanner(System.in);
+            String selectMenu = scanner.nextLine();
 
-        switch (selectMenu) {
-            case "1":
-                System.out.println("Dodaj film");
-                break;
-            case "2":
-                searchMovieByName();
-                break;
-            case "3":
-                System.out.println("Wypisz film z zakresu dat");
-                break;
-            case "4":
-                searchMoviesForActor();
-                break;
-            case "5":
-                System.out.println("Ile kosztowało wyprodukowanie danego filmu");
-                break;
-            default:
-                System.out.println("Wyjsci z menu");
+            switch (selectMenu) {
+                case "1":
+                    System.out.println("Dodaj film");
+
+                    String title;
+                    String directorName;
+                    int day;
+                    int month;
+                    int year;
+
+
+                    String type;
+
+
+
+                 //   Movie movie = new Movie()
+
+
+                    break;
+                case "2":
+                    searchMovieByName();
+                    break;
+                case "3":
+                    System.out.println("Wypisz film z zakresu dat");
+                    break;
+                case "4":
+                    searchMoviesForActor();
+                    break;
+                case "5":
+                    showCostOfMovie();
+                    break;
+                case "0":
+                    counter = false;
+                    break;
+                default:
+                    counter = false;
+            }
+        }
+    }
+
+    private static void showCostOfMovie() {
+        System.out.println("Podaj nazwe filmu");
+        Scanner scanner3 = new Scanner(System.in);
+        String movieTitle = scanner3.nextLine();
+
+        for (Movie movie : movieList) {
+            if (movieTitle.equals(movie.getTitle())) {
+                double cost = movie.getDirector().getSalary();
+                for (Actor actor : movie.getActors()) {
+                    cost = cost + actor.getSalary();
+                }
+                System.out.println(cost);
+            }
         }
     }
 
@@ -47,10 +85,11 @@ public class Main {
                 "2. Szukaj filmu po nazwie\n" +
                 "3. Wypisz film z zakresu dat\n" +
                 "4. Sprawdz w jakich filmach grał dany aktor\n" +
-                "5. Ile kosztowało wyprodukowanie danego filmu");
+                "5. Ile kosztowało wyprodukowanie danego filmu\n" +
+                "0. Wyjscie");
     }
 
-    private static void dataPreparation() {
+    private static void dataPreparation() { //todo dodac wczytywanie z pliku
         Director stevenSpilberg = new Director("Steven", "Spilberg", 1000, true);
         Director jamesCameron = new Director("James", "Cameron", 1200, false);
 
@@ -66,6 +105,8 @@ public class Main {
         Movie rambo = new Movie("Rambo", jamesCameron, LocalDate.of(1988, 1, 23),
                 Arrays.asList(sylvesterStalone, juliaRoberts, nicolKidman), MovieType.action);
         movieList = Arrays.asList(titanic, rambo);
+        actorList = Arrays.asList(tomHanks, juliaRoberts, sylvesterStalone, nicolKidman);
+        directorList = Arrays.asList(jamesCameron, stevenSpilberg);
     }
 
     private static void searchMoviesForActor() {
